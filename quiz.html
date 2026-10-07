@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LTEC 643 - Fundamentals of game design</title>
+    <style>
+        :root {
+            --bg-color: #f9f9fb;
+            --text-color: #1a1a1a;
+            --primary: #0056b3;
+            --primary-hover: #004494;
+            --correct: #28a745;
+            --wrong: #dc3545;
+            --card-bg: #ffffff;
+            --border: #e0e0e0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        h2 {
+            margin: 0.5rem 0 0 0;
+            font-size: 1.3rem;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        main {
+            flex: 1;
+            width: 100%;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            box-sizing: border-box;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .question-text {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        button {
+            font-family: inherit;
+            font-size: 1.1rem;
+            padding: 1rem 1.5rem;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            background-color: white;
+            color: var(--primary);
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        button:hover:not(:disabled) {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        button:disabled {
+            cursor: default;
+            opacity: 0.9;
+        }
+
+        .key-hint {
+            display: inline-block;
+            background-color: #eee;
+            color: #555;
+            border-radius: 4px;
+            padding: 0.2rem 0.6rem;
+            margin-right: 1rem;
+            font-weight: bold;
+            font-size: 1rem;
+            min-width: 1.5rem;
+            text-align: center;
+        }
+
+        button:hover:not(:disabled) .key-hint {
+            background-color: white;
+            color: var(--primary);
+        }
+
+        .correct-btn {
+            background-color: var(--correct) !important;
+            border-color: var(--correct) !important;
+            color: white !important;
+        }
+
+        .correct-btn .key-hint { background-color: white; color: var(--correct); }
+
+        .wrong-btn {
+            background-color: var(--wrong) !important;
+            border-color: var(--wrong) !important;
+            color: white !important;
+        }
+
+        .wrong-btn .key-hint { background-color: white; color: var(--wrong); }
+
+        #feedback-area {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 2px dashed var(--border);
+            display: none;
+        }
+
+        .explanation {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .status-text {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-correct { color: var(--correct); }
+        .status-wrong { color: var(--wrong); }
+
+        .action-btn {
+            background-color: var(--primary);
+            color: white;
+            justify-content: center;
+            font-weight: bold;
+            border: none;
+            width: 100%;
+            padding: 1.2rem;
+            font-size: 1.2rem;
+        }
+
+        .action-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        #results-container {
+            text-align: center;
+            display: none;
+        }
+
+        .score-display {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 1rem 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: #666;
+            font-size: 1rem;
+            margin-top: auto;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>LTEC 643</h1>
+        <h2>Fundamentals of game design</h2>
+    </header>
+
+    <main>
+        <div id="quiz-container" class="card">
+            <div id="question-progress" style="font-size: 1rem; color: #666; margin-bottom: 1rem;">
+                Question <span id="current-q-num">1</span> of <span id="total-q-num">10</span>
+            </div>
+            <p id="question-text" class="question-text">Loading question...</p>
+            
+            <div id="choices-container" class="choices">
+                <!-- Choices injected by JS -->
+            </div>
+
+            <div id="feedback-area">
+                <div id="explanation-text" class="explanation"></div>
+                <button id="next-btn" class="action-btn">Next Question (Press Enter)</button>
+            </div>
+        </div>
+
+        <div id="results-container" class="card hidden">
+            <h2>Quiz Complete!</h2>
+            <div class="score-display">
+                <span id="score-text">0</span> / 10
+            </div>
+            <p style="margin-bottom: 2rem;">You have completed the self-check practice quiz.</p>
+            <button id="restart-btn" class="action-btn">Try again (Press Enter)</button>
+        </div>
+    </main>
+
+    <footer>
+        Made by Dr. Peter with Gemini
+    </footer>
+
+    <script>
+        // Put all ten questions in a single array at the top of the script so they can be edited by hand.
+        const originalQuestions = [
+            {
+                question: "What is the 'core loop' in game design?",
+                choices: [
+                    "The primary set of actions a player takes repeatedly.",
+                    "The main menu interface and navigation system.",
+                    "The game engine's internal rendering cycle.",
+                    "The final sequence or boss fight of the game."
+                ],
+                correctIndex: 0,
+                explanation: "The core loop represents the fundamental, repeating actions players engage with throughout the game to achieve goals."
+            },
+            {
+                question: "Which of the following best defines 'agency' in a video game?",
+                choices: [
+                    "The company or studio that developed the game.",
+                    "The player's ability to make meaningful choices that impact the game world.",
+                    "The pre-scripted cutscenes that advance the storyline.",
+                    "The level of difficulty set by the designers."
+                ],
+                correctIndex: 1,
+                explanation: "Player agency refers to the capacity of players to make choices that have a tangible, meaningful effect on the game's outcome or environment."
+            },
+            {
+                question: "What does the MDA framework stand for in game design analysis?",
+                choices: [
+                    "Meaning, Development, Art",
+                    "Movement, Design, Action",
+                    "Mechanics, Dynamics, Aesthetics",
+                    "Motivation, Difficulty, Achievement"
+                ],
+                correctIndex: 2,
+                explanation: "The MDA framework formalizes game consumption by breaking it down into Mechanics (rules), Dynamics (system behavior), and Aesthetics (emotional responses)."
+            },
+            {
+                question: "In game design, what is a 'heuristic'?",
+                choices: [
+                    "A rule of thumb or guideline used to evaluate usability and design.",
+                    "A specific programming language used for game logic.",
+                    "A type of non-player character that assists the player.",
+                    "The highest possible score a player can achieve."
+                ],
+                correctIndex: 0,
+                explanation: "Design heuristics are established rules of thumb or broad guidelines used by designers to evaluate and improve the player experience."
+            },
+            {
+                question: "What is the primary purpose of 'prototyping' during early game development?",
+                choices: [
+                    "To quickly test and validate core mechanics and gameplay ideas.",
+                    "To create final, high-resolution art assets.",
+                    "To write the complete, final narrative script.",
+                    "To compose the final background music and soundtrack."
+                ],
+                correctIndex: 0,
+                explanation: "Prototyping allows designers to rapidly and cheaply test gameplay mechanics to see if they are fun before committing full resources to development."
+            },
+            {
+                question: "Which term describes the psychological state where challenge perfectly matches player skill, avoiding both boredom and frustration?",
+                choices: [
+                    "Nash equilibrium",
+                    "Optimal rendering",
+                    "The flow channel",
+                    "The grind zone"
+                ],
+                correctIndex: 2,
+                explanation: "The flow channel is the state of optimal engagement and immersion where a game's difficulty perfectly aligns with the player's increasing skill level."
+            },
+            {
+                question: "What is an 'affordance' in the context of game interfaces and level design?",
+                choices: [
+                    "The budget allocated for developing a specific level.",
+                    "A perceived or actual property that suggests how an object should be interacted with.",
+                    "A type of premium in-game currency.",
+                    "The overall performance and frame rate of the game."
+                ],
+                correctIndex: 1,
+                explanation: "Affordances are design clues—like a button that looks pressable or a ledge marked with bright paint—that naturally tell the player what actions are possible."
+            },
+            {
+                question: "What does the term 'ludonarrative dissonance' refer to?",
+                choices: [
+                    "A conflict or disconnect between a game's story and its actual gameplay mechanics.",
+                    "A technical bug that causes audio and video to desync.",
+                    "A disagreement between two co-op players during a match.",
+                    "A poorly written script that confuses the player."
+                ],
+                correctIndex: 0,
+                explanation: "Ludonarrative dissonance occurs when the narrative being told contradicts the actions the player is forced to perform during actual gameplay."
+            },
+            {
+                question: "In multiplayer game design, what does 'asymmetrical gameplay' mean?",
+                choices: [
+                    "The map layout is perfectly mirrored for fairness.",
+                    "All players start with the exact same equipment and stats.",
+                    "The graphics are rendered purely in 2D.",
+                    "Players or teams have distinctly different roles, abilities, or objectives."
+                ],
+                correctIndex: 3,
+                explanation: "Asymmetrical gameplay features different rules, mechanics, or goals for competing players, such as one powerful monster versus four weak survivors."
+            },
+            {
+                question: "What is 'onboarding' in game design?",
+                choices: [
+                    "Installing the game onto a hard drive or console.",
+                    "Adding a new developer to the production team.",
+                    "The process of teaching a new player the rules, controls, and mechanics of the game.",
+                    "Creating a driveable vehicle within the game world."
+                ],
+                correctIndex: 2,
+                explanation: "Onboarding is the critical introductory phase, often an invisible tutorial, designed to smoothly teach players how to play and navigate the game."
+            }
+        ];
+
+        let activeQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let hasAnsweredCurrent = false;
+
+        // DOM Elements
+        const quizContainer = document.getElementById('quiz-container');
+        const resultsContainer = document.getElementById('results-container');
+        const questionText = document.getElementById('question-text');
+        const choicesContainer = document.getElementById('choices-container');
+        const feedbackArea = document.getElementById('feedback-area');
+        const explanationText = document.getElementById('explanation-text');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const currentQNumSpan = document.getElementById('current-q-num');
+        const totalQNumSpan = document.getElementById('total-q-num');
+        const scoreTextSpan = document.getElementById('score-text');
+
+        // Utility to shuffle an array
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        function initQuiz() {
+            // Copy original without shuffling for the very first load (as requested, only shuffle on Try Again)
+            activeQuestions = [...originalQuestions];
+            totalQNumSpan.textContent = activeQuestions.length;
+            resetState();
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            hasAnsweredCurrent = false;
+            feedbackArea.style.display = 'none';
+            choicesContainer.innerHTML = '';
+            
+            const currentQ = activeQuestions[currentQuestionIndex];
+            currentQNumSpan.textContent = currentQuestionIndex + 1;
+            questionText.textContent = currentQ.question;
+
+            currentQ.choices.forEach((choice, index) => {
+                const button = document.createElement('button');
+                button.innerHTML = `<span class="key-hint">${index + 1}</span> ${choice}`;
+                button.onclick = () => handleAnswer(index);
+                button.setAttribute('data-index', index);
+                choicesContainer.appendChild(button);
+            });
+        }
+
+        function handleAnswer(selectedIndex) {
+            if (hasAnsweredCurrent) return;
+            hasAnsweredCurrent = true;
+
+            const currentQ = activeQuestions[currentQuestionIndex];
+            const isCorrect = selectedIndex === currentQ.correctIndex;
+            
+            if (isCorrect) {
+                score++;
+            }
+
+            // Update UI for buttons
+            const buttons = choicesContainer.querySelectorAll('button');
+            buttons.forEach((btn, index) => {
+                btn.disabled = true; // Disable all buttons
+                
+                if (index === currentQ.correctIndex) {
+                    btn.classList.add('correct-btn');
+                } else if (index === selectedIndex && !isCorrect) {
+                    btn.classList.add('wrong-btn');
+                }
+            });
+
+            // Show explanation and feedback
+            const statusHtml = isCorrect 
+                ? '<span class="status-text status-correct">✓ Correct!</span>' 
+                : '<span class="status-text status-wrong">✗ Incorrect.</span>';
+            
+            explanationText.innerHTML = `${statusHtml} ${currentQ.explanation}`;
+            feedbackArea.style.display = 'block';
+            
+            // Scroll to bottom of card so Next button is visible on small screens
+            feedbackArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < activeQuestions.length) {
+                renderQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            quizContainer.classList.add('hidden');
+            resultsContainer.classList.remove('hidden');
+            scoreTextSpan.textContent = score;
+        }
+
+        function resetState() {
+            currentQuestionIndex = 0;
+            score = 0;
+            quizContainer.classList.remove('hidden');
+            resultsContainer.classList.add('hidden');
+        }
+
+        function restartQuiz() {
+            // Shuffle questions on "Try again"
+            activeQuestions = shuffleArray(originalQuestions);
+            resetState();
+            renderQuestion();
+        }
+
+        // Event Listeners for buttons
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', restartQuiz);
+
+        // Keyboard Support
+        document.addEventListener('keydown', (event) => {
+            const isQuizActive = !quizContainer.classList.contains('hidden');
+            const isResultsActive = !resultsContainer.classList.contains('hidden');
+
+            // Handle Number Keys 1-4 for answering
+            if (isQuizActive && !hasAnsweredCurrent) {
+                const keyNum = parseInt(event.key);
+                if (keyNum >= 1 && keyNum <= 4) {
+                    // Make sure the index exists in current choices
+                    const currentQ = activeQuestions[currentQuestionIndex];
+                    if (keyNum - 1 < currentQ.choices.length) {
+                        handleAnswer(keyNum - 1);
+                    }
+                }
+            }
+
+            // Handle Enter key for proceeding
+            if (event.key === 'Enter') {
+                if (isQuizActive && hasAnsweredCurrent) {
+                    nextQuestion();
+                } else if (isResultsActive) {
+                    restartQuiz();
+                }
+            }
+        });
+
+        // Start Quiz on load
+        initQuiz();
+    </script>
+</body>
+</html>

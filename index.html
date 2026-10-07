@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LTEC 643 - Fall 2026</title>
+    <style>
+        :root {
+            --primary: #0056b3;
+            --bg: #ffffff;
+            --text: #333333;
+            --light-gray: #f4f4f4;
+            --border: #dddddd;
+        }
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            margin: 0;
+            line-height: 1.6;
+            font-size: 18px;
+        }
+        nav {
+            background: var(--primary);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: 600;
+            display: inline-block;
+            padding: 5px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        header {
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+        h1 { margin: 0 0 0.5rem 0; font-size: 2.5rem; color: var(--primary); }
+        h2 { border-bottom: 2px solid var(--light-gray); padding-bottom: 0.5rem; margin-top: 2.5rem; color: var(--primary); }
+        h3 { margin: 0; font-size: 1.25rem; }
+        
+        .glance-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            background: var(--light-gray);
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+        @media(min-width: 600px) {
+            .glance-grid { grid-template-columns: 1fr 1fr; }
+        }
+        
+        .table-responsive {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            font-size: 1rem;
+        }
+        th, td {
+            border: 1px solid var(--border);
+            padding: 12px;
+            vertical-align: top;
+        }
+        th {
+            background: var(--light-gray);
+            font-weight: bold;
+            text-align: left;
+        }
+        
+        .policies-list li {
+            margin-bottom: 1rem;
+        }
+        
+        .practice-section {
+            background: #e8f4fd;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 1rem;
+        }
+        .practice-btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .practice-btn:hover {
+            background: #004494;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            border-top: 1px solid var(--border);
+            margin-top: 3rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#glance">Course at a glance</a>
+        <a href="#schedule">Weekly schedule</a>
+        <a href="#grades">How grades work</a>
+        <a href="#policies">Policies</a>
+        <a href="#practice">Practice</a>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1>LTEC 643</h1>
+            <h3>Dr. Peter Leong</h3>
+            <p><strong>Fall 2026</strong></p>
+        </header>
+
+        <section id="glance">
+            <h2>Course at a glance</h2>
+            <div class="glance-grid">
+                <div>
+                    <strong>Meeting Times/Venue:</strong><br>
+                    Fully online asynchronous with optional synchronous sessions on Monday or Wednesday 6:00 - 8:30 pm (HST) in Zoom: <a href="https://go.hawaii.edu/hL2">https://go.hawaii.edu/hL2</a>
+                </div>
+                <div>
+                    <strong>Location:</strong><br>
+                    Wist Hall 228
+                </div>
+                <div>
+                    <strong>Contact:</strong><br>
+                    956-3902<br>
+                    <a href="mailto:peterleo@hawaii.edu">peterleo@hawaii.edu</a><br>
+                    <em>Email is the best way to contact me</em>
+                </div>
+                <div>
+                    <strong>Office Hours:</strong><br>
+                    Also feel free to call to make an appointment to meet in my office or vOffice<br>
+                    vOffice: <a href="https://go.hawaii.edu/hL2">https://go.hawaii.edu/hL2</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="schedule">
+            <h2>Weekly schedule</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Wk</th>
+                            <th>Date</th>
+                            <th>Topics</th>
+                            <th>Readings/Assignments</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>8/24</td><td>Course Introduction. Introduction to the educational role of museums, cultural institutions, tourist attractions & visitor information centers. Optional Zoom: Wed 8/26 6:00 - 7:30 pm</td><td>Readings: Weaver (2007) Ch 1-3; Li et al. (2024); NMC Horizon Report 2015 & 2016. Assignment: Vlog (leisure activities breakdown).</td></tr>
+                        <tr><td>2</td><td>8/31</td><td>Theoretical approaches. Course Gamification.</td><td>Readings: Csikzentmihalyi & Hermanson (1995); McLellan (2000); Pine & Gilmore (1998); Falk, Dierking & Semmel (2015) Ch 1. Assignment: Vlog (readings reflection).</td></tr>
+                        <tr><td>3</td><td>9/7</td><td>Use of instructional design for museum & art exhibits. Tech Snippet: Gamification. Guest: Matthew Baylor. Optional Zoom: Wed 9/9 6:00 - 7:30 pm</td><td>Readings: Schenck & Shrock (1991); Braverman (1988); Sheldon (2011); Brown-McBride & Leong (2022). Assignment: Quest #1 (2D Game Design).</td></tr>
+                        <tr><td>4</td><td>9/14</td><td>Designing interactive visitor experiences. Guest: Rachel Mamiya Hernandez.</td><td>Readings: Gammon (2003); Black (2005) Ch 7; Standards for Museum Exhibitions; Hein (1998) Ch 8.</td></tr>
+                        <tr><td>5</td><td>9/21</td><td>Museums/Tourist Site on the Web: Curating Virtual Exhibits. Tech Snippet: MoOM. Guest: Malia Mallchok. Optional Zoom: 9/23 6:00 - 7:30 pm</td><td>Readings: Virtual Crash Course in Design Thinking; Steve Dietz (1998); Urban & Twidale (2007).</td></tr>
+                        <tr><td>6</td><td>9/28</td><td>Designated week for site visit. Design Thinking (user research).</td><td>e.g. Honolulu Zoo, Bishop Museum, etc. Assignment: Case study Due 10/7.</td></tr>
+                        <tr><td>7</td><td>10/5</td><td>Fundamentals of game design. Guest: Brandon Chun, Mike Smola. Optional Zoom: Mon 10/5 6:00 - 7:30 pm</td><td>Readings: Gee (2009, 2005); Development et al. (2005) Ch 1; Bates (2004) Ch 2; Brathwaite & Schrieber (2008) Ch 13. Activities: Play online games, Quest #3.</td></tr>
+                        <tr><td>8</td><td>10/12</td><td>Brainstorming an interactive game idea. Guest: Madeline Giscombe.</td><td>Readings: Rogers (2014) Level 2; Development et al. (2005) Ch 2. Assignments: Quest #4, Vlog (Shark Tank!).</td></tr>
+                        <tr><td>9</td><td>10/19</td><td>3D Video Game Development. Guest: Patrick Karjala. Optional Zoom: 10/21 6:00 - 7:30 pm</td><td>Readings: Borkwood (2013); Menard & Wagstaff (2014). Assignments: Quest #5, Video game analysis Due 10/28.</td></tr>
+                        <tr><td>10</td><td>10/26</td><td>Work time for final project proposal.</td><td>Assignment: Quest #6 (3D Game Design).</td></tr>
+                        <tr><td>11</td><td>11/2</td><td>Design documentation: Concept document, Flowcharts, Scripts, Storyboards, Technical design documents.</td><td>Readings: Rogers (2014) Level 4; Rouse Ch 19. Assignments: Proposal Due 11/4, Individual reviews Due 11/11.</td></tr>
+                        <tr><td>12</td><td>11/9</td><td>Technology overview: a tour of technologies used in interactive media projects. Tech Snippet: AR & VR.</td><td></td></tr>
+                        <tr><td>13</td><td>11/16</td><td>Vibe coding. Funding sources. Optional vOffice hours: Mon 11/16 6:00-7:00pm.</td><td>Resources: Justin Lai’s vibe coding resource, AI Prompting Guide, Innovation Playground.</td></tr>
+                        <tr><td>14</td><td>11/23</td><td>Thanksgiving Holiday</td><td></td></tr>
+                        <tr><td>15</td><td>11/30</td><td>Work time for final project</td><td></td></tr>
+                        <tr><td>16</td><td>12/7</td><td>Client/SharkTank Pitch Presentations. Synchronous Zoom: Mon 12/7 6:00-8:00pm.</td><td>Assignment: Final design documents Due 12/14.</td></tr>
+                        <tr><td>17</td><td>12/14</td><td>Reflections & course evaluation</td><td></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p><em>*Schedule/content may change based on the needs of the course</em></p>
+        </section>
+
+        <section id="grades">
+            <h2>How grades work</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Assignment</th>
+                            <th>Points</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Online participation (group tasks, quests, postings)</td><td>150</td></tr>
+                        <tr><td>Weekly video blog (vblog) via Vivipod (at least 10)</td><td>100</td></tr>
+                        <tr><td>Case study of educational technology use in informal learning environments</td><td>200</td></tr>
+                        <tr><td>Video Game Analysis</td><td>100</td></tr>
+                        <tr><td>Group Project – Proposal for a digital interactive learning game idea</td><td>50</td></tr>
+                        <tr><td>Individual reviews of digital interactive learning game idea</td><td>50</td></tr>
+                        <tr><td>Group Project – Design Documents</td><td>200</td></tr>
+                        <tr><td>Group Final Online Video Presentation</td><td>100</td></tr>
+                        <tr><td>Peer Evaluation of Group Project Contribution & Participation</td><td>50</td></tr>
+                        <tr><th>Total points</th><th>1000</th></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="policies">
+            <h2>Policies</h2>
+            <ul class="policies-list">
+                <li><strong>Accommodations:</strong> This class welcomes all students. If you need accommodations, contact me privately or the KOKUA program (956-7511, kokua@hawaii.edu) to coordinate reasonable accommodations.</li>
+                <li><strong>Course Platform:</strong> We will use Lamaku as a document repository, assignment submissions, and online class discussions.</li>
+                <li><strong>Deadlines & Late Work:</strong> Assignments are due on indicated dates. Late assignments are accepted for credit only with instructor permission. Missing or late assignments will result in a decrease of points, including negative scores for non-submissions.</li>
+                <li><strong>Time Commitment:</strong> Expect to spend a minimum of 5-10 hours on assignments each week. Highly successful students are good time managers.</li>
+                <li><strong>Conduct & Academic Integrity:</strong> Follow the UH Manoa Student Conduct Code. All ideas used must be your own or properly credited. Plagiarism will result in failure and disciplinary action.</li>
+                <li><strong>Artificial Intelligence (AI):</strong> AI is embraced to augment learning. Students are permitted to integrate AI into some substantive tasks (ideas, outlines, editing, proofreading, prototyping). <em>Students are required to keep drafts of assignments and logs of interactions with AI applications</em> to demonstrate their contribution. When in doubt, seek prior approval.</li>
+                <li><strong>Collaborative Environment:</strong> Grades are based on standards; there is no limit to the number of A's and B's awarded. Students are not in competition and are encouraged to work together.</li>
+            </ul>
+        </section>
+
+        <section id="practice">
+            <h2>Practice</h2>
+            <div class="practice-section">
+                <p>Test your knowledge with the practice quiz.</p>
+                <a href="quiz.html" class="practice-btn">Practice quiz</a>
+            </div>
+        </section>
+
+        <footer>
+            &copy; 2026 Dr. Peter Leong
+        </footer>
+    </div>
+    
+    <script>
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
